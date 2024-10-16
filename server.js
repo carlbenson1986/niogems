@@ -54,7 +54,7 @@ async function checkColumnExists(connection, tableName, columnName) {
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   let connection;
-
+  res.setHeader('Content-Type', 'text/plain');
   try {
     connection = await oracledb.getConnection(dbConfig);
     console.log('Database connection established.');
