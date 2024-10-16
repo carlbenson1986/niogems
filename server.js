@@ -52,6 +52,7 @@ async function checkColumnExists(connection, tableName, columnName) {
 
 // User login endpoint
 app.post('/login', async (req, res) => {
+  console.log('sfsdfsdf');
   const { username, password } = req.body;
   let connection;
   res.setHeader('Content-Type', 'text/plain');
