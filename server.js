@@ -7,7 +7,21 @@ const app = express();
 const port = 3000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'http://share.niogems.com', // Ensure the correct domain
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+  credentials: true
+}));
+
+// Handle preflight (OPTIONS) requests explicitly
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', 'http://share.niogems.com');
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(204); // Respond with 204 No Content
+});
 app.use(bodyParser.json());
 
 // Database connection details
@@ -40,13 +54,7 @@ async function checkColumnExists(connection, tableName, columnName) {
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   let connection;
-  res.setHeader('Access-Control-Allow-Credentials', true)
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  )
+
   try {
     connection = await oracledb.getConnection(dbConfig);
     console.log('Database connection established.');
