@@ -48,7 +48,9 @@ async function checkColumnExists(connection, tableName, columnName) {
   );
   return result.rows[0][0] > 0;
 }
-
+app.get('/', (req, res) => {
+  res.send("Welcome to the API");
+});
 // User login endpoint
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
