@@ -54,6 +54,7 @@ app.get('/', (req, res) => {
 // User login endpoint
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
+  console.log('sfsd', username, password);
   let connection;
 
   try {
