@@ -14,8 +14,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   user: 'SYS',
   password: 'N0raD3mr#1', // Replace with your actual password
-  connectString: '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=NIOGEMS-RDS)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=NIOGEMS)))',
-  privilege: oracledb.SYSDBA
+  connectString: '20.231.195.79:1521/NIOGEMS',
 };
 
 // Function to check if a table exists
