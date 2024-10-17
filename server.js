@@ -7,7 +7,9 @@ const app = express();
 const port = 3000;
 
 // Middleware
-app.use(cors((origin, next) => (next())));
+app.use(cors({
+  origin: '*'
+}));
 app.use(bodyParser.json());
 
 // Database connection details
