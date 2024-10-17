@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   user: 'SYS',
   password: 'N0raD3mr#1', // Replace with your actual password
-  connectString: '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=NIOGEMS-RDS)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=NIOGEMS)))',
+  connectString: 'NIOGEMS-RDS.niogems.com:1521/NIOGEMS',
   privilege: oracledb.SYSDBA
 };
 
