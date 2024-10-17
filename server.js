@@ -7,7 +7,12 @@ const app = express();
 const port = 3000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://niogems-front.vercel.app', // Correctly specify the allowed origin
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type'],
+  credentials: true // If your request requires credentials (cookies, HTTP authentication)
+}));
 app.use(bodyParser.json());
 
 // Database connection details
