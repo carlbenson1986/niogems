@@ -11,7 +11,12 @@ app.use(cors({
   origin: '*'
 }));
 app.use(bodyParser.json());
-
+app.options('*', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://share.niogems.com');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.sendStatus(200);
+});
 // Database connection details
 const dbConfig = {
   user: 'SYS',
