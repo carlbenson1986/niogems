@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 const dbConfig = {
   user: 'SYS',
   password: 'N0raD3mr#1', // Replace with your actual password
-  connectString: '20.2NIOGEMS',
+  connectString: '20.231.195.79:1521/NIOGEMS',
 };
 
 // Function to check if a table exists
