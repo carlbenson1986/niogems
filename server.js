@@ -7,27 +7,14 @@ const app = express();
 const port = 3000;
 
 // Middleware
-app.use(cors({
-  origin: ['https://niogems-front.vercel.app', 'http://localhost'],
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type'],
-  credentials: true,
-}));
-
+app.use(cors());
 app.use(bodyParser.json());
-
-app.options('*', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost'); // Allow localhost
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Allowed methods
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); // Allowed headers
-  res.sendStatus(200); // Respond with a 200 status
-});
 
 // Database connection details
 const dbConfig = {
   user: 'SYS',
   password: 'N0raD3mr#1', // Replace with your actual password
-  connectString: '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=20.231.195.79)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=NIOGEMS)))',
+  connectString: '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=NIOGEMS-RDS)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=NIOGEMS)))',
   privilege: oracledb.SYSDBA
 };
 
