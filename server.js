@@ -8,11 +8,12 @@ const port = 3000;
 
 // Middleware
 app.use(cors({
-  origin: 'https://niogems-front.vercel.app', // Correctly specify the allowed origin
+  origin: ['https://niogems-front.vercel.app', 'http://localhost:3000'],
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type'],
-  credentials: true // If your request requires credentials (cookies, HTTP authentication)
+  credentials: true,
 }));
+
 app.use(bodyParser.json());
 
 // Database connection details
