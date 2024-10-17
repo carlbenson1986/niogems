@@ -53,7 +53,6 @@ async function checkColumnExists(connection, tableName, columnName) {
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   let connection;
-  return res.json({ success: false, message: 'One or more required columns do not exist in NIO_USERS.' });
   try {
     connection = await oracledb.getConnection(dbConfig);
     console.log('Database connection established.');
