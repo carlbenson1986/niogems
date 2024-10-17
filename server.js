@@ -10,13 +10,13 @@ const port = 3000;
 app.use(cors({
   origin: {
     alllowedOrigins: [
-      "http://share.niogems.com",
+      "https://niogems-front.vercel.app/",
     ],
   }
 }));
 app.use(bodyParser.json());
 app.options('*', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://share.niogems.com');
+  res.setHeader('Access-Control-Allow-Origin', 'https://niogems-front.vercel.app/');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.sendStatus(200);
