@@ -9,12 +9,12 @@ const port = 3000;
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Allow specific methods
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); // Allow specific headers
-  next();
-});
+app.use(cors({
+  origin: '*',  // Allow only your frontend URL
+  methods: ['GET', 'POST'],  // Allow only GET and POST methods
+  allowedHeaders: ['Content-Type'],  // Allow only Content-Type header
+}));
+
 // Database connection details
 const dbConfig = {
   user: 'SYS',
