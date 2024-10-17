@@ -8,15 +8,17 @@ const port = 3000;
 
 // Middleware
 app.use(cors({
-  origin: {
-    alllowedOrigins: [
-      "https://niogems-front.vercel.app/",
-    ],
-  }
+  origin: 'https://niogems-front.vercel.app', // Correctly specify the allowed origin
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type'],
+  credentials: true // If your request requires credentials (cookies, HTTP authentication)
 }));
+
 app.use(bodyParser.json());
+
+// Handle preflight requests
 app.options('*', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://niogems-front.vercel.app/');
+  res.setHeader('Access-Control-Allow-Origin', 'https://niogems-front.vercel.app');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.sendStatus(200);
