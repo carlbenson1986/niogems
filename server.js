@@ -82,7 +82,7 @@ app.post('/login', async (req, res) => {
       // Retrieve OFFICE_GROUP_ID from NIO_USERS
       const officeResult = await connection.execute(
         `SELECT OFFICE_GROUP_ID FROM NIOGEMS_USERs.NIO_USERS WHERE LOGIN_ID = :loginId`,
-        { loginId: username }
+        { loginId: 'GGAMBRELL' }
       );
 
       const officeGroupId = officeResult.rows.length > 0 ? officeResult.rows[0][0] : null;
