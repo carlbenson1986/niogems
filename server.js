@@ -7,13 +7,20 @@ const app = express();
 const port = 3000;
 
 // Middleware
-app.use(cors());
-app.use(bodyParser.json());
 app.use(cors({
-  origin: '*',  // Allow only your frontend URL
-  methods: ['GET', 'POST'],  // Allow only GET and POST methods
-  allowedHeaders: ['Content-Type'],  // Allow only Content-Type header
+  origin: '*',  // Allow all origins or set specific allowed origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allow these HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'],  // Allow these headers
+  credentials: true,  // Allow cookies if necessary
 }));
+
+app.use(bodyParser.json());
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Allow these methods
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow these headers
+  next();
+});
 
 // Database connection details
 const dbConfig = {
@@ -21,7 +28,9 @@ const dbConfig = {
   password: 'N0raD3mr#1', // Replace with your actual password
   connectString: '20.231.195.79:1521/NIOGEMS',
 };
-
+app.options('*', (req, res) => {
+  res.status(200).send();
+});
 // Function to check if a table exists
 async function checkTableExists(connection, tableName) {
   const result = await connection.execute(
@@ -44,7 +53,7 @@ async function checkColumnExists(connection, tableName, columnName) {
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   let connection;
-
+  return res.json({ success: false, message: 'One or more required columns do not exist in NIO_USERS.' });
   try {
     connection = await oracledb.getConnection(dbConfig);
     console.log('Database connection established.');
