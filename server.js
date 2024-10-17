@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   user: 'SYS',
   password: 'N0raD3mr#1', // Replace with your actual password
-  connectString: '20.231.195.79:1521/NIOGEMS',
+  connectString: '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=NIOGEMS-RDS)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=NIOGEMS)))',
   privilege: oracledb.SYSDBA
 };
 
@@ -45,10 +45,38 @@ app.post('/login', async (req, res) => {
     connection = await oracledb.getConnection(dbConfig);
     console.log('Database connection established.');
 
-    
+    // Check if NIO_USERS table exists
+    if (!(await checkTableExists(connection, 'NIO_USERS'))) {
+      return res.json({ success: false, message: 'NIO_USERS table does not exist.' });
+    }
+
+    // Check if required columns exist
+    if (!(await checkColumnExists(connection, 'NIO_USERS', 'LOGIN_ID')) ||
+        !(await checkColumnExists(connection, 'NIO_USERS', 'OFFICE_GROUP_ID'))) {
+      return res.json({ success: false, message: 'One or more required columns do not exist in NIO_USERS.' });
+    }
+
+    // Check user credentials
+    const userResult = await connection.execute(
+      `SELECT NAME FROM USER$ WHERE NAME = :username AND PASSWORD = :password`,
+      { username, password }
+    );
+
+    if (userResult.rows.length > 0) {
+      // Retrieve OFFICE_GROUP_ID from NIO_USERS
+      const officeResult = await connection.execute(
+        `SELECT OFFICE_GROUP_ID FROM NIOGEMS_USERs.NIO_USERS WHERE LOGIN_ID = :loginId`,
+        { loginId: username }
+      );
+
+      const officeGroupId = officeResult.rows.length > 0 ? officeResult.rows[0][0] : null;
+      res.json({ success: true, message: 'Login successful!', officeGroupId });
+    } else {
+      res.json({ success: false, message: 'Invalid credentials' });
+    }
   } catch (err) {
     console.error('Error occurred:', err.message);
-    res.json({ success: 'false', message: err.message });
+    res.json({ success: false, message: err.message });
   } finally {
     if (connection) {
       try {
