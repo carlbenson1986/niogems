@@ -8,7 +8,11 @@ const port = 3000;
 
 // Middleware
 app.use(cors({
-  origin: '*'
+  origin: {
+    alllowedOrigins: [
+      "http://share.niogems.com",
+    ],
+  }
 }));
 app.use(bodyParser.json());
 app.options('*', (req, res) => {
