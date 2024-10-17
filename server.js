@@ -27,7 +27,7 @@ app.options('*', (req, res) => {
 const dbConfig = {
   user: 'SYS',
   password: 'N0raD3mr#1', // Replace with your actual password
-  connectString: '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=NIOGEMS-RDS)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=NIOGEMS)))',
+  connectString: '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=20.231.195.79)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=NIOGEMS)))',
   privilege: oracledb.SYSDBA
 };
 
